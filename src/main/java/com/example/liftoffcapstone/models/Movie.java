@@ -1,9 +1,11 @@
 package com.example.liftoffcapstone.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class Movie {
@@ -13,6 +15,10 @@ public class Movie {
     private Long id;
 
     private String title;
+
+    @OneToMany
+    @JoinColumn
+    private List<Review> reviews;
 
     public Movie(String title) {
         this.title = title;
@@ -31,5 +37,10 @@ public class Movie {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void addReview(Review review) { reviews.add(review);}
+
+    public List<Review> getReviews() { return reviews;}
+
 
 }

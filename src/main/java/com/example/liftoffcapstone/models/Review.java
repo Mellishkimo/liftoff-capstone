@@ -3,13 +3,16 @@ package com.example.liftoffcapstone.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Review {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
+
+    private String author;
 
     private int plotRating;
 
@@ -31,9 +34,13 @@ public class Review {
 
     private String graphicContentDescription;
 
-    public Review(int plotRating, int characterRating, int threatRating, int aestheticRating, int graphicContentRating,
+    @ManyToOne
+    private Movie movie;
+
+    public Review(String author, int plotRating, int characterRating, int threatRating, int aestheticRating, int graphicContentRating,
                   String plotDescription, String characterDescription, String threatDescription, String aestheticDescription,
                   String graphicContentDescription) {
+        this.author = author;
         this.plotRating = plotRating;
         this.characterRating = characterRating;
         this.threatRating = threatRating;
@@ -46,8 +53,18 @@ public class Review {
         this.graphicContentDescription = graphicContentDescription;
     }
 
-    public int getId() {
+    public Review() {}
+
+    public long getId() {
         return id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public int getPlotRating() {
@@ -128,5 +145,13 @@ public class Review {
 
     public void setGraphicContentDescription(String graphicContentDescription) {
         this.graphicContentDescription = graphicContentDescription;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
