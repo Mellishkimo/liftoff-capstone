@@ -6,6 +6,8 @@ public class MovieAggregateScores {
 
     private long movieId;
 
+    private String moviePosterSource;
+
     private double overallAggregate;
 
     private double plotAggregate;
@@ -18,9 +20,10 @@ public class MovieAggregateScores {
 
     private double graphicContentAggregate;
 
-    public MovieAggregateScores(String movieName, long movieId, double overallAggregate, double plotAggregate, double characterAggregate, double threatAggregate, double aestheticAggregate, double graphicContentAggregate) {
+    public MovieAggregateScores(String movieName, long movieId, String moviePosterSource, double overallAggregate, double plotAggregate, double characterAggregate, double threatAggregate, double aestheticAggregate, double graphicContentAggregate) {
         this.movieName = movieName;
         this.movieId = movieId;
+        this.moviePosterSource = moviePosterSource;
         this.overallAggregate = overallAggregate;
         this.plotAggregate = plotAggregate;
         this.characterAggregate = characterAggregate;
@@ -45,6 +48,14 @@ public class MovieAggregateScores {
 
     public void setMovieId(long movieId) {
         this.movieId = movieId;
+    }
+
+    public String getMoviePosterSource() {
+        return moviePosterSource;
+    }
+
+    public void setMoviePosterSource(String moviePosterSource) {
+        this.moviePosterSource = moviePosterSource;
     }
 
     public double getOverallAggregate() {

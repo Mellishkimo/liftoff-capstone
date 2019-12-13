@@ -13,7 +13,6 @@ import com.example.liftoffcapstone.models.Review;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = { "http://localhost:3000" })
 @RestController
@@ -52,6 +51,8 @@ public class MovieResource {
         for (Movie movie : movies) {
             String movieName = movie.getTitle();
             long movieId = movie.getId();
+            String moviePosterSource = movie.getPosterSource();
+            double overallAggregate = 0;
             double plotAggregate = 0;
             double characterAggregate = 0;
             double threatAggregate = 0;
@@ -67,14 +68,21 @@ public class MovieResource {
                 aestheticAggregate = aestheticAggregate + (review.getAestheticRating());
                 graphicContentAggregate = graphicContentAggregate + (review.getGraphicContentRating());
             }
-            plotAggregate = plotAggregate / (reviews.size());
-            characterAggregate = characterAggregate / (reviews.size());
-            threatAggregate = threatAggregate / (reviews.size());
-            aestheticAggregate = aestheticAggregate / (reviews.size());
-            graphicContentAggregate = graphicContentAggregate / (reviews.size());
-            double overallAggregate = (plotAggregate + characterAggregate + threatAggregate + aestheticAggregate) / 4;
 
-            MovieAggregateScores movieAggregate = new MovieAggregateScores(movieName, movieId, overallAggregate, plotAggregate,
+
+            if(reviews.size() != 0) {
+                plotAggregate = plotAggregate / (reviews.size());
+                characterAggregate = characterAggregate / (reviews.size());
+                threatAggregate = threatAggregate / (reviews.size());
+                aestheticAggregate = aestheticAggregate / (reviews.size());
+                graphicContentAggregate = graphicContentAggregate / (reviews.size());
+                overallAggregate = (plotAggregate + characterAggregate + threatAggregate + aestheticAggregate) / 4;
+            }
+
+
+
+
+            MovieAggregateScores movieAggregate = new MovieAggregateScores(movieName, movieId, moviePosterSource, overallAggregate, plotAggregate,
                     characterAggregate, threatAggregate, aestheticAggregate, graphicContentAggregate);
             allAggregates.add(movieAggregate);
         }
