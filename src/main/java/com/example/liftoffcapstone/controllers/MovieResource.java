@@ -94,6 +94,23 @@ public class MovieResource {
         return reviewDao.findAll();
     }
 
+    @GetMapping("/movies/recent")
+    public List<Movie> retrieveRecentlyReviewed() {
+        List<Review> reviews = reviewDao.findAll();
+        List<Movie> recentlyReviewed = new ArrayList<>();
+        int reviewsLength = reviews.size();
+
+        Movie mostRecentMovie = reviews.get(reviewsLength - 1).getMovie();
+        Movie secondRecentMovie = reviews.get(reviewsLength - 2).getMovie();
+        Movie thirdRecentMovie = reviews.get(reviewsLength - 3).getMovie();
+
+        recentlyReviewed.add(mostRecentMovie);
+        recentlyReviewed.add(secondRecentMovie);
+        recentlyReviewed.add(thirdRecentMovie);
+
+        return recentlyReviewed;
+    }
+
     @PostMapping("/movies")
     public ResponseEntity<Void> createMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieDao.save(movie);
@@ -107,6 +124,7 @@ public class MovieResource {
     @PostMapping("/movies/reviews/{id}")
     public ResponseEntity<Void> createReview(@RequestBody Review review, @PathVariable long id) {
         Movie attachedMovie = movieDao.findById(id).orElse(null);
+        review.setMovie(attachedMovie);
         review = reviewDao.save(review);
         attachedMovie.addReview(review);
         movieDao.save(attachedMovie);
